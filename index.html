@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glosario: términos de League of Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f3f4ff;
+            --text-color: #1c1d3b;
+            --primary-color: #3d5afe;
+            --secondary-color: #f50057;
+            --tertiary-color: #00c853;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .search-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        #search {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            color: var(--text-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alphabet {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alphabet span {
+            margin: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .alphabet span:hover {
+            background-color: var(--secondary-color);
+        }
+        .selected-terms {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .terms-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid var(--primary-color);
+        }
+        .term {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .term:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .term-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        .term-description {
+            font-size: 14px;
+            color: var(--text-color);
+        }
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .dark-mode-toggle:hover {
+            background-color: var(--secondary-color);
+        }
+        body.dark-mode {
+            --bg-color: #1c1d3b;
+            --text-color: #ffffff;
+        }
+        body.dark-mode .term,
+        body.dark-mode .alphabet,
+        body.dark-mode .selected-terms,
+        body.dark-mode #search {
+            background-color: #2c2d4a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Glosario: términos de League of Legends</h1>
+        
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Buscar término...">
+        </div>
+        
+        <div class="alphabet">
+            <span>0-9</span>
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+            <span>D</span>
+            <span>E</span>
+            <span>F</span>
+            <span>G</span>
+            <span>H</span>
+            <span>I</span>
+            <span>J</span>
+            <span>K</span>
+            <span>L</span>
+            <span>M</span>
+            <span>N</span>
+            <span>O</span>
+            <span>P</span>
+            <span>Q</span>
+            <span>R</span>
+            <span>S</span>
+            <span>T</span>
+            <span>U</span>
+            <span>V</span>
+            <span>W</span>
+            <span>X</span>
+            <span>Y</span>
+            <span>Z</span>
+        </div>
+
+        <div class="selected-terms"></div>
+        
+        <div class="terms-container">
+            <!-- Los términos se generarán dinámicamente con JavaScript -->
+        </div>
+    </div>
+
+    <button class="dark-mode-toggle">Modo Oscuro</button>
+
+    <script>
+        const terms = [
+        {"title": "AA / Autoataque / Auto",
+        "description": "Ataque básico de los campeones que, por defecto, está activado para ejecutarse automáticamente."
+        },
+        {
+            "title": "ACE / Aniquilados / Aniquilación",
+            "description": "Eliminación completa de los cinco campeones de un equipo."
+        },
+        {
+            "title": "AD / Daño de ataque",
+            "description": "Estadística de daño físico de los campeones."
+        },
+        {
+            "title": "ADC",
+            "description": "Siglas que hacen referencia Attack Damage Carry, campeones basados en daño físico que tradicionalmente se juegan en la posición de tirador en la bot lane."
+        },
+        {
+            "title": "AFK",
+            "description": "Siglas que hacen referencia a Away from Keyboard, utilizadas para referirse a jugadores que, estando en la partida, abandonan el juego mientras siguen conectados.\n            "
+        },
+        {
+            "title": "Aggro",
+            "description": "Puede hacer referencia a un estilo de juego (agresivo) o a ser objetivo de ataques de monstruos, súbditos, campeones o torretas enemigas."
+        },
+        {
+            "title": "AOE",
+            "description": "Siglas que hacen referencia a Area of Effect, utilizadas para referirse a habilidades o ataques que golpean en una determinada zona y no solo al objetivo fijado.\n            "
+        },
+        {
+            "title": "AP / Poder de Habilidad",
+            "description": "Siglas que hacen referencia a Ability power, utilizado para referirse a la capacidad de daño mágico de los campeones."
+        },
+        {
+            "title": "Arbusto / Bush",
+            "description": "Vegetación de la Grieta del Invocador y el Abismo de los Lamentos.\n            "
+        },
+        {
+            "title": "Armadura / Armor",
+            "description": "Estadística de resistencia al daño físico."
+        },
+        {
+            "title": "AS / Attack Speed / Velocidad de Ataque",
+            "description": "Siglas que hacen referencia a Attack Speed, utilizadas para referirse a los autoataques por segundo que puede realizar los campeones."
+        },
+        {
+            "title": "ASAP",
+            "description": "Siglas que hacen referencia a As Soon As Possible. No es específico de League of Legends, pero es utilizado por muchos jugadores para, por ejemplo, pedir ayuda."
+        },
+        {
+            "title": "Aura",
+            "description": "Habilidad pasiva con área de efecto, disponible tanto en objetos como en los propios campeones."
+        },
+        {
+            "title": "Azul / Buffo Azul / Mejora Azul",
+            "description": "Hace referencia al campamento de la jungla asociado a este color. El usuario que lo obtenga recibe una mejora en la regeneración de maná y la velocidad de habilidades."
+        },
+        {
+            "title": "B / Base / Back",
+            "description": "Hace referencia a la vuelta a base mediante la tecla por defecto."
+        },
+        {
+            "title": "Bace Race",
+            "description": "En inglés significa carrera de bases. Se utiliza para describir situaciones en las que los dos equipos han cedido su defensa e intentan acabar la partida a la vez, cada uno en un lado del mapa."
+        },
+        {
+            "title": "Backdoor",
+            "description": "En inglés significa puerta trasera. Hace referencia a una forma de acabar la partida que consiste en asaltar la base enemiga (generalmente con el nexo al descubierto) sin que se percante hasta que sea demasiado tarde."
+        },
+        {
+            "title": "Bann / Baneo / Prohibición",
+            "description": "Dos significados. En fase de selección de campeones, hace referencia a los campeones vetados por los equipos. En cuanto a usuarios, es un castigo o suspensión temporal o permanente."
+        },
+        {
+            "title": "Barón Nashor",
+            "description": "Monstruo épico situado en la zona del carril superior que reaparece al minuto 20 de partida. Otorga una de las dos mejoras más poderosas del juego."
+        },
+        {
+            "title": "Bot Lane / Carril Inferior",
+            "description": "Línea inferior de la Grieta del Invocador."
+        },
+        {
+            "title": "Build / Construcción de Objetos / Itemización",
+            "description": "Conjunto de objetos comprado por un campeón."
+        },
+        {
+            "title": "Buff",
+            "description": "Mejoras que reciben los campeones. En los parches hace referencia a un aumento de poder, mientras que en partida se utiliza para hablar de las mejoras que ofrecen los campamentos de la jungla, barones, dragones o incluso pasivas de las objetos y habilidades."
+        },
+        {
+            "title": "Burst / Daño Explosivo / Daño de ráfaga",
+            "description": "Daño aplicado en una determinada cantidad de tiempo. Normalmente, utilizado para hacer referencia a campeones con esta capacidad."
+        },
+        {
+            "title": "Cangrejo / Crab / Escurridizo",
+            "description": "Campamento neutral que aparece en el río."
+        },
+        {
+            "title": "CC / Crowd Control / Control de adversarios",
+            "description": "Siglas que hacen referencia al control de multitudes. Habilidades que ralentizan, aturden, suprimen o derriban a los adversarios."
+        },
+        {
+            "title": "Campeón / Champ / Champion",
+            "description": "Se utiliza para referirse en genérico a cualquiera de los personajes únicos presentes en League of Legends."
+        },
+        {
+            "title": "CD / Cooldown / Enfriamiento",
+            "description": "Tiempo de retardo en la reutilización de habilidades u objetos."
+        },
+        {
+            "title": "Comp / Compo / Composición",
+            "description": "Conjunto formado por los 5 campeones de un equipo de League of Legends."
+        },
+        {
+            "title": "Counter",
+            "description": "Palabra utilizada para designar a los campeones que sirven para contrarrestar a un determinado personaje."
+        },
+        {
+            "title": "Crítico / Crit",
+            "description": "Golpe que ofrece daño adicional. Se basa en un porcentaje."
+        },
+        {
+            "title": "Crítico %",
+            "description": "Posibilidades sobre cien de que nuestro siguiente ataque básico realice un golpe crítico."
+        },
+        {
+            "title": "CS / Creep / Súbditos / Minions",
+            "description": "Términos para referirse a los pequeños esbirros que aparecen en el mapa cada cierto periodo de tiempo. Originalmente, CS hacía referencia al número total o marcador, pero también se utiliza como sinónimo."
+        },
+        {
+            "title": "Curar / Health",
+            "description": "Puede hacer referencia al hechizo de invocador con el mismo nombre o a la capacidad de curación de algunos jugadores."
+        },
+        {
+            "title": "Debuff",
+            "description": "Efecto negativo aplicado sobre un campeón que debilita sus acciones."
+        },
+        {
+            "title": "Dive",
+            "description": "Ataque realizado a uno o varios enemigos mientras están refugiados bajo una de sus torretas."
+        },
+        {
+            "title": "Dot",
+            "description": "Daño aplicado a lo largo del tiempo por una habilidad o hechizo; por ejemplo, el ignite."
+        },
+        {
+            "title": "DPS",
+            "description": "Siglas que hacen referencia al Daño Por Segundo que es capaz de hacer un personaje. Se utiliza para hablar del daño constante o mediante ataques consecutivos."
+        },
+        {
+            "title": "DPM",
+            "description": "Siglas que hacen referencia a Damage per Minut. Se utiliza para calcular de forma estandarizada cuanto daño ha hecho un jugador a lo largo de una partida."
+        },
+        {
+            "title": "Draft / Fase de Selección",
+            "description": "Fase previa a las partidas donde seleccionamos y bloqueamos personajes."
+        },
+        {
+            "title": "Dragón / Drake",
+            "description": "Monstruo neutral que adquiere características elementales (Fuego, Viento, Agua o Montaña) y otorga una mejora permanente y acumulativa al equipo que lo elimina. Ver también Elder Drake."
+        },
+        {
+            "title": "Dúo",
+            "description": "Juego en pareja en los modos clasificatorios."
+        },
+        {
+            "title": "Early Game / Juego Temprano",
+            "description": "Etapas iniciales de una partida de League of Legends."
+        },
+        {
+            "title": "Elder Drake / Dragón Anciano",
+            "description": "Mejora disponible a partir de que un equipo ha conseguido cuatro dragones que ofrece una bonificación de ejecución sobre los rivales. Junto al Barón Nashor, una de las dos más poderosas de todo el juego."
+        },
+        {
+            "title": "Engage",
+            "description": "Iniciación de una pelea contra el oponente."
+        },
+        {
+            "title": "Esencias Azules / Blue Essences",
+            "description": "Moneda gratuita del juego, utilizada para diversos fines."
+        },
+        {
+            "title": "Farm / Farmeo",
+            "description": "Eliminación de súbditos para conseguir oro."
+        },
+        {
+            "title": "Feed",
+            "description": "Viene de la palabra “alimentar” en inglés. Suele utilizarse para hacer referencia a jugadores que mueren mucho o, por el contrario, a los que han conseguido esas bajas."
+        },
+        {
+            "title": "Flash / Destello",
+            "description": "Hechizo de invocador que nos permite recorrer una pequeña distancia de forma instantánea."
+        },
+        {
+            "title": "First Blood / Primera Sangre",
+            "description": "Primera baja conseguida en una partida de League of Legends."
+        },
+        {
+            "title": "Focus (Hacer/Recibir)",
+            "description": "Acto por el cual establecemos un objetivo prioritario entre el equipo enemigo o los objetivos. También utilizado a la inversa cuando somos el objetivo prioritario del rival."
+        },
+        {
+            "title": "Freeze / Congelar",
+            "description": "Estrategia que consiste en manejar la oleada de súbditos para que se quede en una ubicación concreta."
+        },
+        {
+            "title": "Gank",
+            "description": "Movimiento (tradicionalmente de los junglas) por el que emboscan una línea junto al jugador de ese carril. Para el resto de posiciones se utiliza el término Roam."
+        },
+        {
+            "title": "GG",
+            "description": "No específico de LoL. Significa Good Game, una forma amable de acabar una partida."
+        },
+        {
+            "title": "Gólems / Krugs",
+            "description": "Campamento de la jungla formado por estos monstruos de piedra."
+        },
+        {
+            "title": "GPM",
+            "description": "Siglas que hacen referencia a Gold Per Minute, la cantidad de oro conseguida por cada minuto de partida de algún jugador."
+        },
+        {
+            "title": "Gromp / Sapo",
+            "description": "Campamento que aparece en la jungla frente a la mejora azul."
+        },
+        {
+            "title": "Harrash",
+            "description": "Acto de hostigar a un enemigo (normalmente durante la fase de líneas) realizando daño para enviarlo de vuelta a base."
+        },
+        {
+            "title": "Heraldo de la Grieta / Rift Herald",
+            "description": "Monstruo normal que aparece antes del Barón Nashor y que podemos invocar para golpear torretas enemigas."
+        },
+        {
+            "title": "Invade",
+            "description": "Invasión a la jungla enemiga para acabar con los monstruos de la zona rival. También se refiere a una estrategia a nivel uno que consiste en ir a buscar a los campeones enemigos al campamento inicial del jungla rival."
+        },
+        {
+            "title": "Jungla",
+            "description": "Zona neutral del mapa en la que aparecen los campamentos. También hace referencia a los jugadores de esa posición."
+        },
+        {
+            "title": "Jungler",
+            "description": "Término específico (y más utilizado) para los jugadores de la jungla."
+        },
+        {
+            "title": "Kite",
+            "description": "Movimiento por el cual tratamos de escapar hacia atrás mientras golpeamos a los rivales para hacer el mayor daño posible."
+        },
+        {
+            "title": "Knock Up / Derribo",
+            "description": "Efecto de control que desplaza a un rival puede ser hacia arriba (Up) o hacia los lados (aside) o en posición opuesta (back)."
+        },
+        {
+            "title": "Late Game / Juego Tardío",
+            "description": "Fase final de las partidas de League of Legends."
+        },
+        {
+            "title": "Letalidad / Lethality",
+            "description": "Estadística útil para ignorar armadura y hacer más daño a los campeones resistentes (véase penetración de armadura)."
+        },
+        {
+            "title": "Lobos / “Wolfs”",
+            "description": "Campamento de la jungla que incluye estos monstruos."
+        },
+        {
+            "title": "Macrogame / Macro / Macroestrategia",
+            "description": "Conjunto de estrategias que depende de todos los jugadores y suele implicar el juego entorno a objetivos."
+        },
+        {
+            "title": "Meta / Metagame / Metajuego",
+            "description": "Conjunto de estrategias consideradas óptimas para ganar una partida."
+        },
+        {
+            "title": "Microgame / Micro / Microestrategia",
+            "description": "Conjunto de estrategias llevadas a cabo por un jugador individual."
+        },
+        {
+            "title": "Mid Lane / Medio",
+            "description": "Carril central en la Grieta del Invocador"
+        },
+        {
+            "title": "Mid Laner / Medio",
+            "description": "Término para designar a los jugadores del carril central."
+        },
+        {
+            "title": "Mid Game",
+            "description": "Fase media de las partidas de League of Legends."
+        },
+        {
+            "title": "MMR",
+            "description": "Puntuación oculta que determina a qué enemigos nos encontaremos en cada partida."
+        },
+        {
+            "title": "MR / Resistencia Mágica / Magic Resist",
+            "description": "Estadística de los campeones que determina su resistencia al daño mágico."
+        },
+        {
+            "title": "Nerf",
+            "description": "En cada parche, los campeones que ven reducido su poder."
+        },
+        {
+            "title": "OP",
+            "description": "Campeones, objetos o mecánicas consideradas demasiado poderosas por la comunidad."
+        },
+        {
+            "title": "Oro / Gold",
+            "description": "Moneda conseguida en partida, utilizada para comprar objetos."
+        },
+        {
+            "title": "Pasiva",
+            "description": "Habilidad de un campeón u objeto que no requiere de su uso activo, si no que se aplica siempre (o bajo determinadas circunstancias) de forma automática."
+        },
+        {
+            "title": "Pathing / Ruta",
+            "description": "Camino seguido por un determinado campeón a lo largo de la partida. Se utiliza principalmente para hablar de las rutas que siguen los jugadores en la jungla (orden de campamentos, emboscadas..)"
+        },
+        {
+            "title": "Peel",
+            "description": "Acto de protección de un aliado, ayudándole a lidiar con los rivales próximos a él."
+        },
+        {
+            "title": "Picuchillos / Raptors",
+            "description": "Campamento de la jungla próximo al carril central en la zona de la mejora roja."
+        },
+        {
+            "title": "Poke",
+            "description": "Estrategia de desgaste que consiste en realizar daño mediante habilidades con elevado rango."
+        },
+        {
+            "title": "Prioridad / Prio",
+            "description": "Estrategia que consiste en acabar con los súbditos de una oleada antes que el rival para poder movernos por el mapa antes que él."
+        },
+        {
+            "title": "Push / Empuje",
+            "description": "Estrategia por la que apuramos a acabar con los súbditos enemigos para que la oleada se apresure a las torres de los rivales."
+        },
+        {
+            "title": "Ragequit",
+            "description": "Término utilizado para hablar de los jugadores aliados o rivales que se desconecta de una partida debido a su enfado con la situación de la misma."
+        },
+        {
+            "title": "Rango / Rank",
+            "description": "Cada una de las ligas disponibles en el modo clasificatorio de League of Legends."
+        },
+        {
+            "title": "Rojo / Buffo Rojo / Mejora Roja",
+            "description": "Campamento de la jungla que ofrece una mejora en la regeneración de vida, además de daño extra y ralentización por autoataque."
+        },
+        {
+            "title": "Root / Enraizar",
+            "description": "Efecto de control que evita que los enemigos puedan moverse (salvo con algunas habilidades)."
+        },
+        {
+            "title": "Safe / Juego Seguro",
+            "description": "Término inglés utilizado para indicar que procedemos a jugar con mayor cautela o recomendárselo a un compañero."
+        },
+        {
+            "title": "Silenciar / Silenciado",
+            "description": "Efecto de control que evita que los enemigos puedan utilizar hechizos o habilidades."
+        },
+        {
+            "title": "Smurf",
+            "description": "Cuenta secundaria de un jugador normalmente utilizada para jugar partidas clasificatorias en un rango menor al que le corresponde."
+        },
+        {
+            "title": "Snowball / Bola de nieve",
+            "description": "Principio de League of Legends que indica que las ventajas dan lugar a mayores ventajas."
+        },
+        {
+            "title": "Spacing",
+            "description": "Movimiento con el que mantenemos distancias con el enemigo (de forma ofensiva u defensiva) de forma que podamos golpear a máximo rango minimizando la oportunidad de recibir daño y maximizando nuestra eficacia."
+        },
+        {
+            "title": "Splitpush / Empuje paralelo / Dividido",
+            "description": "Estrategia que consiste en empujar una línea separado del equipo mientras ellos ejercen presión en otra zona del mapa."
+        },
+        {
+            "title": "Stun / Aturdir",
+            "description": "Efecto de control que impide el movimiento de los enemigos y evita que puedan utilizar hechizos o habilidades."
+        },
+        {
+            "title": "Support / Apoyo / Soporte",
+            "description": "Campeón frecuentemente utilizado en el carril inferior y destinado a acompañar al ADC o bot laner."
+        },
+        {
+            "title": "Tanque / Tank",
+            "description": "Campeones destinados a aguantar daño, principalmente jugados en el carril superior, jungla o support."
+        },
+        {
+            "title": "Teamfight / Pelea grupal",
+            "description": "Peleas en las que participan la mayor parte de los campeones de una partida de League of Legends."
+        },
+        {
+            "title": "Tier List",
+            "description": "Orden jerárquico de campeones que permite saber cuáles son las mejores elecciones en un momento determinado."
+        },
+        {
+            "title": "Top Lane",
+            "description": "Carril superior de la Grieta del Invocador. También hace referencia a los jugadores de esa posición."
+        },
+        {
+            "title": "Top Laner",
+            "description": "Término utilizado para designar a los jugadores y campeones de la top lane."
+        },
+        {
+            "title": "Tribush / Triseto",
+            "description": "Arbustos colocados entre los carriles superior e inferior y que los separan de la entrada de la jungla de cada lado del mapa."
+        },
+        {
+            "title": "Ultimate / Definitiva / R",
+            "description": "Suele ser la habilidad más importante de los campeones por su daño o utilidad. Su tiempo de recarga también suele ser más largo de lo normal."
+        },
+        {
+            "title": "Wave / Oleada",
+            "description": "Cada uno de los conjuntos de súbditos que invaden un carril."
+        },
+        {
+            "title": "WP",
+            "description": "Acrónimo de Well Played. Es una bonita forma de acabar una partida, señala al rival y los compañeros que han jugado bien."
+        },
+        {
+            "title": "Zonear",
+            "description": "Técnica en la que un jugador aprovecha su posicionamiento para denegar espacios de mapa al enemigo."
+        },
+        ];
+
+        const termsContainer = document.querySelector('.terms-container');
+        const selectedTermsContainer = document.querySelector('.selected-terms');
+        const searchInput = document.getElementById('search');
+        const alphabetLetters = document.querySelectorAll('.alphabet span');
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+
+        function renderTerms(filteredTerms = terms) {
+            termsContainer.innerHTML = '';
+            filteredTerms.forEach(term => {
+                const termElement = document.createElement('div');
+                termElement.classList.add('term');
+                termElement.innerHTML = `
+                    <div class="term-title">${term.title}</div>
+                    <div class="term-description">${term.description}</div>
+                `;
+                termsContainer.appendChild(termElement);
+            });
+        }
+
+        function filterTerms(query) {
+            return terms.filter(term => 
+                term.title.toLowerCase().includes(query.toLowerCase()) ||
+                term.description.toLowerCase().includes(query.toLowerCase())
+            );
+        }
+
+        function showSelectedTerms(letter) {
+            const filteredTerms = terms.filter(term => {
+                if (letter === '0-9') {
+                    return /^\d/.test(term.title);
+                }
+                return term.title.toLowerCase().startsWith(letter.toLowerCase());
+            });
+            
+            selectedTermsContainer.innerHTML = '';
+            filteredTerms.forEach(term => {
+                const termElement = document.createElement('div');
+                termElement.classList.add('term');
+                termElement.innerHTML = `
+                    <div class="term-title">${term.title}</div>
+                    <div class="term-description">${term.description}</div>
+                `;
+                selectedTermsContainer.appendChild(termElement);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const filteredTerms = filterTerms(e.target.value);
+            renderTerms(filteredTerms);
+            selectedTermsContainer.innerHTML = '';
+        });
+
+        alphabetLetters.forEach(letter => {
+            letter.addEventListener('click', () => {
+                showSelectedTerms(letter.textContent);
+                renderTerms();
+            });
+        });
+
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            darkModeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Modo Claro' : 'Modo Oscuro';
+        });
+
+        renderTerms();
+    </script>
+</body>
+</html>
